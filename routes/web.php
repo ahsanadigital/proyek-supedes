@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::any('/',                                         [HomeController::class, 'main'])->name('home');
 Route::any('/logout',                                   [HomeController::class, 'logout'])->name('logout');
 Route::post('/data/proses',                             [HomeController::class, 'process_data'])->name('process-data');
+Route::any('/search',                                   [HomeController::class, 'search'])->name('search');
+Route::any('/cetak/{id}',                               [HomeController::class, 'cetak'])->name('cetak');
+Route::any('/unduh/{id}',                               [HomeController::class, 'unduh'])->name('unduh');
 
 Route::any('/kritik-saran',                             [KritikSaranController::class, 'main'])->name('krisar');
 Route::any('/kritik-saran/process',                     [KritikSaranController::class, 'process'])->name('krisar.process');
@@ -37,6 +40,11 @@ Route::prefix('rt')->group(function () {
     Route::any('/auth/process',                         [LoginRT::class, 'process'])->name('ketua_rt.login-process');
 
     Route::middleware(['auth.rt'])->group(function () {
+
+        // Data Kritik dan Saran
+        Route::get('kritik-saran',                      [KetuaRTController::class, 'krisar'])->name('ketua_rt.krisar_main');
+        Route::get('kritik-saran/verify/{id}',          [KetuaRTController::class, 'verify_krisar'])->name('ketua_rt.krisar_verify');
+
         Route::get('/',                                 [KetuaRTController::class, 'main'])->name('ketua_rt.home');
         Route::get('/verifikasi',                       [KetuaRTController::class, 'verifikasi'])->name('ketua_rt.verifikasi');
         Route::get('/verifikasi/{id}',                  [KetuaRTController::class, 'verify'])->name('ketua_rt.verify');
@@ -50,6 +58,11 @@ Route::prefix('rw')->group(function () {
     Route::any('/auth/process',                         [LoginRW::class, 'process'])->name('ketua_rw.login-process');
 
     Route::middleware(['auth.rw'])->group(function () {
+
+        // Data Kritik dan Saran
+        Route::get('kritik-saran',                      [KetuaRWController::class, 'krisar'])->name('ketua_rw.krisar_main');
+        Route::get('kritik-saran/verify/{id}',          [KetuaRWController::class, 'verify_krisar'])->name('ketua_rw.krisar_verify');
+
         Route::get('/',                                 [KetuaRWController::class, 'main'])->name('ketua_rw.home');
         Route::get('/verifikasi',                       [KetuaRWController::class, 'verifikasi'])->name('ketua_rw.verifikasi');
         Route::get('/verifikasi/{id}',                  [KetuaRWController::class, 'verify'])->name('ketua_rw.verify');
@@ -65,8 +78,9 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth.loggedin'])->group(function () {
         Route::any('/',                                 [Main::class, 'home'])->name('lurah.home');
 
-        // Data Petugas
+        // Data Kritik dan Saran
         Route::get('kritik-saran',                      [Main::class, 'krisar'])->name('krisar.main');
+        Route::get('kritik-saran/verify/{id}',          [Main::class, 'verify'])->name('krisar.verify');
 
         // Data Petugas
         Route::get('petugas',                           [PetugasController::class, 'main'])->name('petugas.main');

@@ -122,17 +122,40 @@
                             <h3>Pencarian Data</h3>
                             <p class="text-muted">Pencarian data pengajuan "Surat Pengantar" anda.</p>
 
-                            <div class="table-striped">
-                                <table class="table-striped table">
-                                    <thead>
-                                        <th width="15%">#</th>
-                                        <th width="30%">ID Registrasi</th>
-                                        <th width="30%">Nama Terang</th>
-                                        <th width="15%">Jangka Waktu</th>
-                                        <th width="10%">Aksi</th>
-                                    </thead>
-                                </table>
+                            {!! Form::open([ 'route' =>  'search', 'method' => 'GET' ]) !!}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+
+                                    <div class="form-group mb-3">
+                                        <label for="nik_search">Nomor NIK/Kitas/Kitap</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user fa-fw"></i>
+                                            </span>
+                                            <input type="text" class="form-control" name="nik" id="nik_search" placeholder="Nomor NIK/Kitas/Kitap Anda" />
+                                        </div>
+                                        <div class="error-message"></div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+
+                                    <div class="form-group mb-3">
+                                        <label for="fullname_search">Nama Lengkap</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user fa-fw"></i>
+                                            </span>
+                                            <div class="form-control" id="fullname_search">Nama Lengkap</div>
+                                        </div>
+                                        <div class="error-message"></div>
+                                    </div>
+
+                                </div>
                             </div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search fa-fw me-2"></i>Cari Data</button>
+                            {!! Form::close() !!}
                         </div>
                     </div>
 
@@ -170,6 +193,23 @@ $('#pengajuan #nik').on("keyup", function() {
         },
         error() {
             $('#pengajuan #fullname').html('');
+        }
+    });
+});
+// Get NIK Data
+
+// Get NIK Data
+$('form #nik_search').on("keyup", function() {
+    $.ajax({
+        url: '{{ route('api.data-nik') }}',
+        data: {nik: $(this).val()},
+        type: 'POST',
+
+        success(response) {
+            $('form #fullname_search').html(response.data.nama_lengkap);
+        },
+        error() {
+            $('form #fullname_search').html('');
         }
     });
 });

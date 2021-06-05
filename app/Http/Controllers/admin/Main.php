@@ -36,4 +36,9 @@ class Main extends Controller
         ];
         return view('admin.krisar', $data);
     }
+
+    function verify(KritikSaran $krisar, $id) {
+        $krisar->whereId($id)->update(['confirmed' => 1]);
+        return back();
+    }
 }

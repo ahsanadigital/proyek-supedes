@@ -1,4 +1,4 @@
-@extends('templates.admin')
+@extends('templates.rt')
 
 @section('header')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css"/>
@@ -59,9 +59,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @if($item->for == 'lurah' && $item->confirmed == 0)
-                            <a href="{{ route('krisar.verify', $item->id) }}" class="btn btn-success"><i class="fas fa-check fa-fw me-2"></i>Verifikasi</a>
-                            @elseif ($item->for == 'lurah' OR $item->for !== 'lurah' && $item->confirmed == 1)
+                            @if($item->for == 'ketua_rt' && $item->confirmed == 0)
+                            <a href="{{ route('ketua_rt.krisar_verify', $item->id) }}" class="btn btn-success"><i class="fas fa-check fa-fw me-2"></i>Verifikasi</a>
+                            @elseif ($item->for == 'ketua_rt' OR $item->for !== 'ketua_rt' && $item->confirmed == 1)
                             <button class="btn btn-success" disabled="disabled"><i class="fas fa-check fa-fw me-2"></i>Verifikasi</button>
                             @endif
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times fa-fw me-2"></i>Tutup</button>

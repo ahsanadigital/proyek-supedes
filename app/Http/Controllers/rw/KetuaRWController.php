@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rw;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataPengantar;
+use App\Models\KritikSaran;
 use Illuminate\Http\Request;
 
 class KetuaRWController extends Controller
@@ -50,6 +51,23 @@ class KetuaRWController extends Controller
      */
     function verify(DataPengantar $pengantar, $id = null) {
         $pengantar->whereId($id)->update(['keterangan' => 'verifikasi_lurah']);
+        return back();
+    }
+
+    function krisar(KritikSaran $krisar) {
+        $data['title']          = 'Kritik Saran';
+        $data['krisar']         = $krisar->where('for', '=', 'ketua_rw')->paginate(12);
+        $data['jabatan']        = [
+            'ketua_rw'  => 'Ketua RW',
+            'lurah'     => 'Kelurahan',
+            'ketua_rt'  => 'Ketua RT',
+            'user'      => 'Warga',
+        ];
+        return view('rw.krisar', $data);
+    }
+
+    function verify_krisar(KritikSaran $krisar, $id) {
+        $krisar->whereId($id)->update(['confirmed' => 1]);
         return back();
     }
 }

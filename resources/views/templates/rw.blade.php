@@ -45,7 +45,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <div class="card-body card mx-3 mb-3">
                         <div class="d-flex">
-                            <img src="{{ asset('upload/default.jpg') }}" alt="{{ Auth::user()->nama_terang }}" height="60" class="rounded-circle" />
+                            <img src="{{ asset('system/default.jpg') }}" alt="{{ Auth::user()->nama_terang }}" height="60" class="rounded-circle" />
 
                             <div class="detail ms-2">
                                 <p class="m-0"><strong>{{ Auth::user()->nama_terang }}</strong></p>
@@ -75,6 +75,12 @@
                             <a class="nav-link{{ Request::is('rt/verifikasi') ? ' active' : '' }}" href="{{ route('ketua_rw.verifikasi') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-check-circle fa-fw"></i></div>
                                 Verifikasi Data
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link{{ Request::is('rw/kritik-saran') ? ' active' : '' }}" href="{{ route('ketua_rw.krisar_main') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-inbox fa-fw"></i></div>
+                                Kritik & Saran
                             </a>
                         </li>
                     </ul>

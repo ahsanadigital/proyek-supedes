@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rt;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataPengantar;
+use App\Models\KritikSaran;
 use Illuminate\Http\Request;
 
 class KetuaRTController extends Controller
@@ -29,6 +30,23 @@ class KetuaRTController extends Controller
             'user'      => 'Warga',
         ];
         return view('rt.verifikasi', $data);
+    }
+
+    function krisar(KritikSaran $krisar) {
+        $data['title']          = 'Kritik Saran';
+        $data['krisar']         = $krisar->where('for', '=', 'ketua_rt')->paginate(12);
+        $data['jabatan']        = [
+            'ketua_rw'  => 'Ketua RW',
+            'lurah'     => 'Kelurahan',
+            'ketua_rt'  => 'Ketua RT',
+            'user'      => 'Warga',
+        ];
+        return view('rt.krisar', $data);
+    }
+
+    function verify_krisar(KritikSaran $krisar, $id) {
+        $krisar->whereId($id)->update(['confirmed' => 1]);
+        return back();
     }
 
     /**
